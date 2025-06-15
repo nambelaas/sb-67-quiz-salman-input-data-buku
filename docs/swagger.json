@@ -1,0 +1,721 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "contact": {}
+    },
+    "paths": {
+        "/api/books/": {
+            "get": {
+                "description": "Endpoint untuk menampilkan semua data book",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "book"
+                ],
+                "summary": "Get All Book",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Bearer \u003cjwt\u003e",
+                        "name": "Authorization",
+                        "in": "header",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/swagger.ResponseGetAllBook"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/swagger.ResponseGetAllBook"
+                        }
+                    }
+                }
+            },
+            "post": {
+                "description": "Endpoint untuk membuat book",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "book"
+                ],
+                "summary": "Create Book",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Bearer \u003cjwt\u003e",
+                        "name": "Authorization",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "description": "Data book",
+                        "name": "Data",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/structs.Book"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/swagger.ResponseDeleteBook"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/swagger.ResponseDeleteBook"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/books/:id": {
+            "get": {
+                "description": "Endpoint untuk menampilkan data book berdasarkan book id",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "book"
+                ],
+                "summary": "Get Book By Id",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Bearer \u003cjwt\u003e",
+                        "name": "Authorization",
+                        "in": "header",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/swagger.ResponseGetBookById"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/swagger.ResponseGetBookById"
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "description": "Endpoint untuk menghapus data book menggunakan book id",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "book"
+                ],
+                "summary": "Delete Book",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Bearer \u003cjwt\u003e",
+                        "name": "Authorization",
+                        "in": "header",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/swagger.ResponseDeleteBook"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/swagger.ResponseDeleteBook"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/categories/": {
+            "get": {
+                "description": "Endpoint untuk menampilkan semua data category",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "category"
+                ],
+                "summary": "Get All Category",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Bearer \u003cjwt\u003e",
+                        "name": "Authorization",
+                        "in": "header",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/swagger.ResponseGetAllCategory"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/swagger.ResponseGetAllCategory"
+                        }
+                    }
+                }
+            },
+            "post": {
+                "description": "Endpoint untuk membuat category",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "category"
+                ],
+                "summary": "Create Category",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Bearer \u003cjwt\u003e",
+                        "name": "Authorization",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "description": "Data category",
+                        "name": "Data",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/structs.Category"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/swagger.ResponseCreateCategory"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/swagger.ResponseCreateCategory"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/categories/:id": {
+            "get": {
+                "description": "Endpoint untuk menampilkan data category berdasarkan category id",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "category"
+                ],
+                "summary": "Get Category By Id",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Bearer \u003cjwt\u003e",
+                        "name": "Authorization",
+                        "in": "header",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/swagger.ResponseGetCategoryById"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/swagger.ResponseGetCategoryById"
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "description": "Endpoint untuk menghapus category menggunakan category id",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "category"
+                ],
+                "summary": "Delete Category",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Bearer \u003cjwt\u003e",
+                        "name": "Authorization",
+                        "in": "header",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/swagger.ResponseDeleteCategory"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/swagger.ResponseDeleteCategory"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/categories/:id/books": {
+            "get": {
+                "description": "Endpoint untuk menampilkan data buku berdasarkan category id",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "category"
+                ],
+                "summary": "Get Books By Category Id",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Bearer \u003cjwt\u003e",
+                        "name": "Authorization",
+                        "in": "header",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/swagger.ResponseGetBookInCategory"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/swagger.ResponseGetBookInCategory"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/users/login": {
+            "post": {
+                "description": "Endpoint untuk login user",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "user"
+                ],
+                "summary": "Login User",
+                "parameters": [
+                    {
+                        "description": "Data user",
+                        "name": "Data",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/structs.AuthRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/swagger.ResponseLogin"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/swagger.ResponseLogin"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/users/register": {
+            "post": {
+                "description": "Endpoint untuk registrasi user baru",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "user"
+                ],
+                "summary": "Register User",
+                "parameters": [
+                    {
+                        "description": "Data user",
+                        "name": "Data",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/structs.AuthRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/swagger.ResponseRegister"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/swagger.ResponseRegister"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/users/update/:id": {
+            "put": {
+                "description": "Endpoint untuk update data user",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "user"
+                ],
+                "summary": "Update User",
+                "parameters": [
+                    {
+                        "description": "Data user",
+                        "name": "Data",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/structs.AuthRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/swagger.ResponseUpdate"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/swagger.ResponseUpdate"
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "definitions": {
+        "structs.AuthRequest": {
+            "type": "object",
+            "required": [
+                "password",
+                "username"
+            ],
+            "properties": {
+                "password": {
+                    "type": "string"
+                },
+                "username": {
+                    "type": "string"
+                }
+            }
+        },
+        "structs.Book": {
+            "type": "object",
+            "required": [
+                "category_id",
+                "price",
+                "release_year",
+                "title",
+                "total_page"
+            ],
+            "properties": {
+                "category_id": {
+                    "type": "integer"
+                },
+                "createdAt": {
+                    "type": "string"
+                },
+                "createdBy": {
+                    "type": "string"
+                },
+                "description": {
+                    "type": "string"
+                },
+                "id": {
+                    "type": "integer"
+                },
+                "image_url": {
+                    "type": "string"
+                },
+                "modifiedAt": {
+                    "type": "string"
+                },
+                "modifiedBy": {
+                    "type": "string"
+                },
+                "price": {
+                    "type": "integer"
+                },
+                "release_year": {
+                    "type": "integer",
+                    "maximum": 2024,
+                    "minimum": 1980
+                },
+                "thickness": {
+                    "type": "string"
+                },
+                "title": {
+                    "type": "string"
+                },
+                "total_page": {
+                    "type": "integer"
+                }
+            }
+        },
+        "structs.Category": {
+            "type": "object",
+            "required": [
+                "name"
+            ],
+            "properties": {
+                "createdAt": {
+                    "type": "string"
+                },
+                "createdBy": {
+                    "type": "string"
+                },
+                "id": {
+                    "type": "integer"
+                },
+                "modifiedAt": {
+                    "type": "string"
+                },
+                "modifiedBy": {
+                    "type": "string"
+                },
+                "name": {
+                    "type": "string"
+                }
+            }
+        },
+        "swagger.ResponseCreateCategory": {
+            "type": "object",
+            "properties": {
+                "Message": {
+                    "type": "string"
+                },
+                "Success": {
+                    "type": "boolean"
+                }
+            }
+        },
+        "swagger.ResponseDeleteBook": {
+            "type": "object",
+            "properties": {
+                "Message": {
+                    "type": "string"
+                },
+                "Success": {
+                    "type": "boolean"
+                }
+            }
+        },
+        "swagger.ResponseDeleteCategory": {
+            "type": "object",
+            "properties": {
+                "Message": {
+                    "type": "string"
+                },
+                "Success": {
+                    "type": "boolean"
+                }
+            }
+        },
+        "swagger.ResponseGetAllBook": {
+            "type": "object",
+            "properties": {
+                "Data": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/structs.Book"
+                    }
+                },
+                "Message": {
+                    "type": "string"
+                },
+                "Success": {
+                    "type": "boolean"
+                }
+            }
+        },
+        "swagger.ResponseGetAllCategory": {
+            "type": "object",
+            "properties": {
+                "Data": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/structs.Category"
+                    }
+                },
+                "Message": {
+                    "type": "string"
+                },
+                "Success": {
+                    "type": "boolean"
+                }
+            }
+        },
+        "swagger.ResponseGetBookById": {
+            "type": "object",
+            "properties": {
+                "Data": {
+                    "$ref": "#/definitions/structs.Book"
+                },
+                "Message": {
+                    "type": "string"
+                },
+                "Success": {
+                    "type": "boolean"
+                }
+            }
+        },
+        "swagger.ResponseGetBookInCategory": {
+            "type": "object",
+            "properties": {
+                "Data": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/structs.Book"
+                    }
+                },
+                "Message": {
+                    "type": "string"
+                },
+                "Success": {
+                    "type": "boolean"
+                }
+            }
+        },
+        "swagger.ResponseGetCategoryById": {
+            "type": "object",
+            "properties": {
+                "Data": {
+                    "$ref": "#/definitions/structs.Category"
+                },
+                "Message": {
+                    "type": "string"
+                },
+                "Success": {
+                    "type": "boolean"
+                }
+            }
+        },
+        "swagger.ResponseLogin": {
+            "type": "object",
+            "properties": {
+                "Success": {
+                    "type": "boolean"
+                },
+                "Token": {
+                    "type": "string"
+                }
+            }
+        },
+        "swagger.ResponseRegister": {
+            "type": "object",
+            "properties": {
+                "Message": {
+                    "type": "string"
+                },
+                "Success": {
+                    "type": "boolean"
+                }
+            }
+        },
+        "swagger.ResponseUpdate": {
+            "type": "object",
+            "properties": {
+                "Message": {
+                    "type": "string"
+                },
+                "Success": {
+                    "type": "boolean"
+                }
+            }
+        }
+    }
+}

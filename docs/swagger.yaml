@@ -1,0 +1,473 @@
+definitions:
+  structs.AuthRequest:
+    properties:
+      password:
+        type: string
+      username:
+        type: string
+    required:
+    - password
+    - username
+    type: object
+  structs.Book:
+    properties:
+      category_id:
+        type: integer
+      createdAt:
+        type: string
+      createdBy:
+        type: string
+      description:
+        type: string
+      id:
+        type: integer
+      image_url:
+        type: string
+      modifiedAt:
+        type: string
+      modifiedBy:
+        type: string
+      price:
+        type: integer
+      release_year:
+        maximum: 2024
+        minimum: 1980
+        type: integer
+      thickness:
+        type: string
+      title:
+        type: string
+      total_page:
+        type: integer
+    required:
+    - category_id
+    - price
+    - release_year
+    - title
+    - total_page
+    type: object
+  structs.Category:
+    properties:
+      createdAt:
+        type: string
+      createdBy:
+        type: string
+      id:
+        type: integer
+      modifiedAt:
+        type: string
+      modifiedBy:
+        type: string
+      name:
+        type: string
+    required:
+    - name
+    type: object
+  swagger.ResponseCreateCategory:
+    properties:
+      Message:
+        type: string
+      Success:
+        type: boolean
+    type: object
+  swagger.ResponseDeleteBook:
+    properties:
+      Message:
+        type: string
+      Success:
+        type: boolean
+    type: object
+  swagger.ResponseDeleteCategory:
+    properties:
+      Message:
+        type: string
+      Success:
+        type: boolean
+    type: object
+  swagger.ResponseGetAllBook:
+    properties:
+      Data:
+        items:
+          $ref: '#/definitions/structs.Book'
+        type: array
+      Message:
+        type: string
+      Success:
+        type: boolean
+    type: object
+  swagger.ResponseGetAllCategory:
+    properties:
+      Data:
+        items:
+          $ref: '#/definitions/structs.Category'
+        type: array
+      Message:
+        type: string
+      Success:
+        type: boolean
+    type: object
+  swagger.ResponseGetBookById:
+    properties:
+      Data:
+        $ref: '#/definitions/structs.Book'
+      Message:
+        type: string
+      Success:
+        type: boolean
+    type: object
+  swagger.ResponseGetBookInCategory:
+    properties:
+      Data:
+        items:
+          $ref: '#/definitions/structs.Book'
+        type: array
+      Message:
+        type: string
+      Success:
+        type: boolean
+    type: object
+  swagger.ResponseGetCategoryById:
+    properties:
+      Data:
+        $ref: '#/definitions/structs.Category'
+      Message:
+        type: string
+      Success:
+        type: boolean
+    type: object
+  swagger.ResponseLogin:
+    properties:
+      Success:
+        type: boolean
+      Token:
+        type: string
+    type: object
+  swagger.ResponseRegister:
+    properties:
+      Message:
+        type: string
+      Success:
+        type: boolean
+    type: object
+  swagger.ResponseUpdate:
+    properties:
+      Message:
+        type: string
+      Success:
+        type: boolean
+    type: object
+info:
+  contact: {}
+paths:
+  /api/books/:
+    get:
+      consumes:
+      - application/json
+      description: Endpoint untuk menampilkan semua data book
+      parameters:
+      - description: Bearer <jwt>
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/swagger.ResponseGetAllBook'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/swagger.ResponseGetAllBook'
+      summary: Get All Book
+      tags:
+      - book
+    post:
+      consumes:
+      - application/json
+      description: Endpoint untuk membuat book
+      parameters:
+      - description: Bearer <jwt>
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      - description: Data book
+        in: body
+        name: Data
+        required: true
+        schema:
+          $ref: '#/definitions/structs.Book'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/swagger.ResponseDeleteBook'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/swagger.ResponseDeleteBook'
+      summary: Create Book
+      tags:
+      - book
+  /api/books/:id:
+    delete:
+      consumes:
+      - application/json
+      description: Endpoint untuk menghapus data book menggunakan book id
+      parameters:
+      - description: Bearer <jwt>
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/swagger.ResponseDeleteBook'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/swagger.ResponseDeleteBook'
+      summary: Delete Book
+      tags:
+      - book
+    get:
+      consumes:
+      - application/json
+      description: Endpoint untuk menampilkan data book berdasarkan book id
+      parameters:
+      - description: Bearer <jwt>
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/swagger.ResponseGetBookById'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/swagger.ResponseGetBookById'
+      summary: Get Book By Id
+      tags:
+      - book
+  /api/categories/:
+    get:
+      consumes:
+      - application/json
+      description: Endpoint untuk menampilkan semua data category
+      parameters:
+      - description: Bearer <jwt>
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/swagger.ResponseGetAllCategory'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/swagger.ResponseGetAllCategory'
+      summary: Get All Category
+      tags:
+      - category
+    post:
+      consumes:
+      - application/json
+      description: Endpoint untuk membuat category
+      parameters:
+      - description: Bearer <jwt>
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      - description: Data category
+        in: body
+        name: Data
+        required: true
+        schema:
+          $ref: '#/definitions/structs.Category'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/swagger.ResponseCreateCategory'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/swagger.ResponseCreateCategory'
+      summary: Create Category
+      tags:
+      - category
+  /api/categories/:id:
+    delete:
+      consumes:
+      - application/json
+      description: Endpoint untuk menghapus category menggunakan category id
+      parameters:
+      - description: Bearer <jwt>
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/swagger.ResponseDeleteCategory'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/swagger.ResponseDeleteCategory'
+      summary: Delete Category
+      tags:
+      - category
+    get:
+      consumes:
+      - application/json
+      description: Endpoint untuk menampilkan data category berdasarkan category id
+      parameters:
+      - description: Bearer <jwt>
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/swagger.ResponseGetCategoryById'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/swagger.ResponseGetCategoryById'
+      summary: Get Category By Id
+      tags:
+      - category
+  /api/categories/:id/books:
+    get:
+      consumes:
+      - application/json
+      description: Endpoint untuk menampilkan data buku berdasarkan category id
+      parameters:
+      - description: Bearer <jwt>
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/swagger.ResponseGetBookInCategory'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/swagger.ResponseGetBookInCategory'
+      summary: Get Books By Category Id
+      tags:
+      - category
+  /api/users/login:
+    post:
+      consumes:
+      - application/json
+      description: Endpoint untuk login user
+      parameters:
+      - description: Data user
+        in: body
+        name: Data
+        required: true
+        schema:
+          $ref: '#/definitions/structs.AuthRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/swagger.ResponseLogin'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/swagger.ResponseLogin'
+      summary: Login User
+      tags:
+      - user
+  /api/users/register:
+    post:
+      consumes:
+      - application/json
+      description: Endpoint untuk registrasi user baru
+      parameters:
+      - description: Data user
+        in: body
+        name: Data
+        required: true
+        schema:
+          $ref: '#/definitions/structs.AuthRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/swagger.ResponseRegister'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/swagger.ResponseRegister'
+      summary: Register User
+      tags:
+      - user
+  /api/users/update/:id:
+    put:
+      consumes:
+      - application/json
+      description: Endpoint untuk update data user
+      parameters:
+      - description: Data user
+        in: body
+        name: Data
+        required: true
+        schema:
+          $ref: '#/definitions/structs.AuthRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/swagger.ResponseUpdate'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/swagger.ResponseUpdate'
+      summary: Update User
+      tags:
+      - user
+swagger: "2.0"

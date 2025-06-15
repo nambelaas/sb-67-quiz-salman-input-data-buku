@@ -10,7 +10,7 @@ type CategoryServiceInterface interface {
 	CreateCategory(ctx *gin.Context) error
 	GetAllCategory(ctx *gin.Context) (listCategory []structs.Category, errorResult error)
 	GetCategoryById(ctx *gin.Context) (dataCategory structs.Category, errorResult error)
-	UpdateCategory(ctx *gin.Context) error
+	GetBookInCategories(ctx *gin.Context) (listBook []structs.Book, errorResult error)
 	DeleteCategory(ctx *gin.Context) error
 }
 

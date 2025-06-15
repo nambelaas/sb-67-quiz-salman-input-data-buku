@@ -38,7 +38,7 @@ func (c *CategoryService) CreateCategory(ctx *gin.Context) error {
 
 	exists := helperData.IsCategoryExists(newCategory.Name)
 	if exists {
-		return errorHelper.EncodeError("data user sudah ada")
+		return errorHelper.EncodeError("data category sudah ada")
 	}
 
 	err = c.repo.CreateCategory(newCategory, dataJwt.Username)
@@ -69,32 +69,14 @@ func (c *CategoryService) GetCategoryById(ctx *gin.Context) (dataCategory struct
 	return dataCategory, nil
 }
 
-func (c *CategoryService) UpdateCategory(ctx *gin.Context) error {
-	var updateCategory structs.Category
-	err := ctx.ShouldBindJSON(&updateCategory)
-	if err != nil {
-		result := errorHelper.ValidationCheck(err)
-		if result != nil {
-			encode, _ := json.Marshal(result)
-			return errors.New(string(encode))
-		}
-
-		return errorHelper.EncodeError(err.Error())
-	}
-
-	dataJwt, err := helper.GetJwtData(ctx)
-	if err != nil {
-		return errorHelper.EncodeError(err.Error())
-	}
-
+func (c *CategoryService) GetBookInCategories(ctx *gin.Context) (listBook []structs.Book, errorResult error) {
 	id := ctx.Param("id")
-
-	err = c.repo.UpdateCategory(id, updateCategory, dataJwt.Username)
+	listBook, err := c.repo.GetBookInCategories(id)
 	if err != nil {
-		return errorHelper.EncodeError(err.Error())
+		return listBook, errorHelper.EncodeError(err.Error())
 	}
 
-	return nil
+	return listBook, nil
 }
 
 func (c *CategoryService) DeleteCategory(ctx *gin.Context) error {

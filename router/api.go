@@ -22,19 +22,19 @@ func listRouteCategory(router *gin.Engine) {
 		categoryRoute.GET("/", controller.GetAllCategory)
 		categoryRoute.GET("/:id", controller.GetCategoryById)
 		categoryRoute.POST("/", controller.CreateCategory)
-		categoryRoute.PUT("/:id", controller.UpdateCategory)
+		categoryRoute.GET("/:id/books", controller.GetBookInCategory)
 		categoryRoute.DELETE("/:id", controller.DeleteCategory)
 	}
 }
 
 func listRouteBook(router *gin.Engine) {
+	bookRoute := router.Group("/api/books")
+	bookRoute.Use(middleware.CheckJwt())
 	{
-		bookRoute := router.Group("/api/books")
-		bookRoute.GET("/")
-		bookRoute.GET("/:id")
-		bookRoute.POST("/")
-		bookRoute.PUT("/:id")
-		bookRoute.DELETE("/:id")
+		bookRoute.GET("/", controller.GetAllBook)
+		bookRoute.GET("/:id", controller.GetBookById)
+		bookRoute.POST("/", controller.CreateBook)
+		bookRoute.DELETE("/:id", controller.DeleteBook)
 	}
 }
 

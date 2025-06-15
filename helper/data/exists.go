@@ -24,3 +24,12 @@ func IsCategoryExists(name string) bool {
 
 	return err == sql.ErrNoRows
 }
+
+func IsBookExists(title string) bool {
+	sqlStatement := `SELECT id from book where title = $1 returning id`
+
+	var id int
+	err := connection.DBConn.QueryRow(sqlStatement, title).Scan(&id)
+
+	return err == sql.ErrNoRows
+}

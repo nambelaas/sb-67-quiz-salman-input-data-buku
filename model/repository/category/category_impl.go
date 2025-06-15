@@ -3,7 +3,6 @@ package category
 import (
 	"database/sql"
 	"errors"
-	"time"
 
 	"github.com/sb-67-go-quiz-salman-input-data-buku/database/connection"
 	"github.com/sb-67-go-quiz-salman-input-data-buku/structs"
@@ -66,20 +65,36 @@ func (c *CategoryRepository) GetCategoryById(id string) (result structs.Category
 	return result, nil
 }
 
-func (c *CategoryRepository) UpdateCategory(id string, category structs.Category, responsibleUser string) error {
-	query := `Update categories set name=$1, modified_at=$2, modified_by=$3 where id=$4`
+func (c *CategoryRepository) GetBookInCategories(id string) (result []structs.Book, errorResult error) {
+	query := `
+		Select b.id, b.title, b.description, b.image_url, b.release_year, b.price, b.total_page, b.thickness, b.category_id, b.created_at, b.created_by, b.modified_at, b.modified_by 
+		from books b
+		join categories c on b.category_id = c.id
+		where c.id = $1
+	`
 
-	res, err := connection.DBConn.Exec(query, category.Name, time.Now(), responsibleUser, id)
+	rows, err := connection.DBConn.Query(query, id)
 	if err != nil {
-		return err
+		return result, err
 	}
 
-	rowsAffected, _ := res.RowsAffected()
-	if rowsAffected == 0 {
-		return errors.New("gagal update category, id tidak ditemukan")
+	defer rows.Close()
+
+	for rows.Next() {
+		var book = structs.Book{}
+		err := rows.Scan(
+            &book.Id, &book.Title, &book.Description, &book.ImageUrl, &book.ReleaseYear, &book.Price,
+            &book.TotalPage, &book.Thickness, &book.CategoryId, &book.CreatedAt, &book.CreatedBy,
+            &book.ModifiedAt, &book.ModifiedBy,
+        )
+		if err != nil {
+			return result, err
+		}
+
+		result = append(result, book)
 	}
 
-	return nil
+	return result, nil
 }
 
 func (c *CategoryRepository) DeleteCategory(id string) error {

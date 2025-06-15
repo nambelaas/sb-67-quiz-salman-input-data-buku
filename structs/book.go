@@ -12,7 +12,7 @@ type Book struct {
 	ReleaseYear int     `json:"release_year" binding:"required,gte=1980,lte=2024"`
 	Price       int     `json:"price" binding:"required,gt=0"`
 	TotalPage   int     `json:"total_page" binding:"required,gt=0"`
-	Thickness   string  `json:"thickness" binding:"required"`
+	Thickness   string  `json:"thickness"`
 	CategoryId  int     `json:"category_id" binding:"required"`
 	CreatedAt   time.Time
 	CreatedBy   string
