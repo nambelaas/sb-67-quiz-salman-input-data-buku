@@ -5,20 +5,11 @@
     "Env": "Development"
   },
   "Database": {
-    "Development": {
-      "DBHOST": "localhost",
-      "DBUSER": "postgres",
-      "DBPASSWORD": "postgres",
-      "DBPORT": 5432,
-      "DBNAME": "db-buku-golang"
-    },
-    "Production": {
-      "DBHOST": "",
-      "DBUSER": "",
-      "DBPASSWORD": "",
-      "DBPORT": "",
-      "DBNAME": ""
-    }
+    "DBHOST": "postgres.railway.internal",
+    "DBUSER": "postgres",
+    "DBPASSWORD": "jtTjWtVTUocuhQqylXqbyotwtVgfDCWT",
+    "DBPORT": 5432,
+    "DBNAME": "railway"
   },
   "JWT": {
     "SignatureKey": "&D4TaBukUG0L4N6",

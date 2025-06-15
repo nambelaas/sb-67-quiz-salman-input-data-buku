@@ -15,13 +15,12 @@ var (
 )
 
 func Init() {
-	env := viper.GetString("App.Env")
 	dbData := fmt.Sprintf("host=%s port=%d user=%s password=%s dbname=%s sslmode=disable",
-		viper.GetString(fmt.Sprintf("Database.%s.DBHOST", env)),
-		viper.GetInt(fmt.Sprintf("Database.%s.DBPORT", env)),
-		viper.GetString(fmt.Sprintf("Database.%s.DBUSER", env)),
-		viper.GetString(fmt.Sprintf("Database.%s.DBPASSWORD", env)),
-		viper.GetString(fmt.Sprintf("Database.%s.DBNAME", env)),
+		viper.GetString("Database.DBHOST"),
+		viper.GetInt("Database.DBPORT"),
+		viper.GetString("Database.DBUSER"),
+		viper.GetString("Database.DBPASSWORD"),
+		viper.GetString("Database.DBNAME"),
 	)
 
 	DBConn, err = sql.Open("postgres", dbData)
