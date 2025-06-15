@@ -19,11 +19,11 @@ func listRouteCategory(router *gin.Engine) {
 	categoryRoute := router.Group("/api/categories")
 	categoryRoute.Use(middleware.CheckJwt())
 	{
-		categoryRoute.GET("/")
-		categoryRoute.GET("/:id")
-		categoryRoute.POST("/")
-		categoryRoute.PUT("/:id")
-		categoryRoute.DELETE("/:id")
+		categoryRoute.GET("/", controller.GetAllCategory)
+		categoryRoute.GET("/:id", controller.GetCategoryById)
+		categoryRoute.POST("/", controller.CreateCategory)
+		categoryRoute.PUT("/:id", controller.UpdateCategory)
+		categoryRoute.DELETE("/:id", controller.DeleteCategory)
 	}
 }
 

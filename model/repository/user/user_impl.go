@@ -3,6 +3,7 @@ package user
 import (
 	"database/sql"
 	"errors"
+	"fmt"
 	"time"
 
 	"github.com/sb-67-go-quiz-salman-input-data-buku/database/connection"
@@ -20,10 +21,11 @@ func (u *UserRepository) RegisterUser(user structs.AuthRequest) error {
 		return err
 	}
 
-	query := `Insert into users (username,password,created_by) values ($1,$2,$3,$4)`
+	query := `Insert into users (username,password,created_by) values ($1,$2,$3)`
 
 	res, err := connection.DBConn.Exec(query, user.Username, string(password), "admin")
 	if err != nil {
+		fmt.Println(err.Error())
 		return errors.New("gagal menjalankan perintah tambah data")
 	}
 

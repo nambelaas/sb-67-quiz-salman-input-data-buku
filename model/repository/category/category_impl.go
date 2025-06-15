@@ -1,0 +1,99 @@
+package category
+
+import (
+	"database/sql"
+	"errors"
+	"time"
+
+	"github.com/sb-67-go-quiz-salman-input-data-buku/database/connection"
+	"github.com/sb-67-go-quiz-salman-input-data-buku/structs"
+)
+
+func NewCategoryRepository() CategoryRepositoryInterface {
+	return &CategoryRepository{}
+}
+
+func (c *CategoryRepository) CreateCategory(category structs.Category, responsibleUser string) error {
+	query := `Insert into categories (name, created_by) values ($1,$2)`
+
+	res, err := connection.DBConn.Exec(query, category.Name, responsibleUser)
+	if err != nil {
+		return err
+	}
+
+	rowsAffected, _ := res.RowsAffected()
+	if rowsAffected == 0 {
+		return errors.New("gagal menambahkan data category")
+	}
+
+	return nil
+}
+
+func (c *CategoryRepository) GetAllCategory() (result []structs.Category, errorResult error) {
+	query := `Select * from categories`
+
+	rows, err := connection.DBConn.Query(query)
+	if err != nil {
+		return result, err
+	}
+
+	defer rows.Close()
+
+	for rows.Next() {
+		var data = structs.Category{}
+		var err = rows.Scan(&data.Id, &data.Name, &data.CreatedAt, &data.CreatedBy, &data.ModifiedAt, &data.ModifiedBy)
+		if err != nil {
+			return result, err
+		}
+
+		result = append(result, data)
+	}
+
+	return result, nil
+}
+
+func (c *CategoryRepository) GetCategoryById(id string) (result structs.Category, errorResult error) {
+	query := `Select * from categories where id = $1`
+
+	err := connection.DBConn.QueryRow(query, id).Scan(&result.Id, &result.Name, &result.CreatedAt, &result.CreatedBy, &result.ModifiedAt, &result.ModifiedBy)
+	if err != nil {
+		if err == sql.ErrNoRows {
+			return result, errors.New("data category tidak ditemukan")
+		}
+		return result, err
+	}
+
+	return result, nil
+}
+
+func (c *CategoryRepository) UpdateCategory(id string, category structs.Category, responsibleUser string) error {
+	query := `Update categories set name=$1, modified_at=$2, modified_by=$3 where id=$4`
+
+	res, err := connection.DBConn.Exec(query, category.Name, time.Now(), responsibleUser, id)
+	if err != nil {
+		return err
+	}
+
+	rowsAffected, _ := res.RowsAffected()
+	if rowsAffected == 0 {
+		return errors.New("gagal update category, id tidak ditemukan")
+	}
+
+	return nil
+}
+
+func (c *CategoryRepository) DeleteCategory(id string) error {
+	query := `Delete from categories where id = $1`
+
+	res, err := connection.DBConn.Exec(query, id)
+	if err != nil {
+		return err
+	}
+
+	rowsAffected, _ := res.RowsAffected()
+	if rowsAffected == 0 {
+		return errors.New("gagal menghapus category, id tidak ditemukan")
+	}
+
+	return nil
+}

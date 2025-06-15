@@ -9,6 +9,7 @@ import (
 	"github.com/gin-gonic/gin"
 	"github.com/golang-jwt/jwt/v5"
 	"github.com/sb-67-go-quiz-salman-input-data-buku/helper"
+	errorHelper "github.com/sb-67-go-quiz-salman-input-data-buku/helper/error"
 	"github.com/sb-67-go-quiz-salman-input-data-buku/structs"
 	"github.com/spf13/viper"
 )
@@ -17,7 +18,8 @@ func CheckJwt() gin.HandlerFunc {
 	return func(c *gin.Context) {
 		tokenString, err := GetJwtTokenFromHeader(c)
 		if err != nil {
-			helper.PrintErrorResponse(c, http.StatusBadRequest, err)
+			helper.PrintErrorResponse(c, http.StatusBadRequest, errorHelper.EncodeError(err.Error()))
+			return
 		}
 
 		token, err := jwt.ParseWithClaims(tokenString, &structs.ClaimJwt{}, func(token *jwt.Token) (interface{}, error) {
@@ -25,16 +27,19 @@ func CheckJwt() gin.HandlerFunc {
 		})
 
 		if err != nil {
-			helper.PrintErrorResponse(c, http.StatusBadRequest, errors.New("token tidak valid"))
+			helper.PrintErrorResponse(c, http.StatusBadRequest, errorHelper.EncodeError("token tidak valid"))
+			return
 		}
 
 		claims, ok := token.Claims.(*structs.ClaimJwt)
 		if !ok || !token.Valid {
-			helper.PrintErrorResponse(c, http.StatusBadRequest, errors.New("token gagal diklaim"))
+			helper.PrintErrorResponse(c, http.StatusBadRequest, errorHelper.EncodeError("token gagal diklaim"))
+			return
 		}
 
 		if claims.ExpiresAt == nil || claims.ExpiresAt.Time.Before(time.Now()) {
-			helper.PrintErrorResponse(c, http.StatusBadRequest, errors.New("token kadaluarsa, silahkan login kembali"))
+			helper.PrintErrorResponse(c, http.StatusBadRequest, errorHelper.EncodeError("token kadaluarsa, silahkan login kembali"))
+			return
 		}
 
 		c.Set("auth", claims)
@@ -68,7 +73,7 @@ func GenerateJwtToken(id int, username string) string {
 			IssuedAt:  jwt.NewNumericDate(time.Now()),
 			Issuer:    viper.GetString("JWT.Issuer"),
 		},
-		UserId: id,
+		UserId:   id,
 		Username: username,
 	}
 
