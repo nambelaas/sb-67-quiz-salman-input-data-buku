@@ -47,6 +47,7 @@ Project ini adalah RESTful API untuk manajemen data buku, kategori, dan user, me
 
 ## Endpoint API
 `{host}/swagger/index.html`
+Example [https://sb67quizbukusalman.up.railway.app/swagger/index.html](https://sb67quizbukusalman.up.railway.app/swagger/index.html)
 
 ## Autentikasi
 
